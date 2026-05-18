@@ -1,5 +1,5 @@
 import { readFileSync, writeFileSync } from 'node:fs';
-import {parseHeader, parseGeneralInfo, parseGridPattern, parseCast, parseProductionTab, parsePages} from './parsers/index.js';
+import { parseHeader, parseGeneralInfo, parseGridPattern, parseCast, parseProductionTab, parsePages } from './parsers/index.js';
 
 function main() {
     const filePath = process.argv[2];

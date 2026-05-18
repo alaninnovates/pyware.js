@@ -9,6 +9,9 @@ export function readUTF8String(buffer: Buffer) {
             break;
         }
         str += String.fromCharCode(byte);
+        if (byte === 0x02) {
+            break;
+        }
     }
     return str;
 }
