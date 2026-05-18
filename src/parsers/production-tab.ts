@@ -9,7 +9,6 @@ export function parseProductionTab(buffer: Buffer) {
     const productionTabEntries = [];
 
     while (bufferForSection.length > 0) {
-        console.log(bufferForSection);
         const count = bufferForSection.subarray(0, 2).readInt16BE(0);
         const field_4962 = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
         const field_4963 = bufferForSection.subarray(2 + field_4962.length + 2, bufferForSection.length).readInt8(0);
@@ -31,8 +30,13 @@ export function parseProductionTab(buffer: Buffer) {
         bufferForSection = bufferForSection.subarray(note5Offset + note5.length + 2);
     }
 
+    if (productionTabEntries.length !== arrayLength) {
+        console.warn(`Warning: Expected ${arrayLength} entries in production tab, but parsed ${productionTabEntries.length}.`);
+    }
+
     return {
         data: {
+            arrayLength,
             productionTabHeader,
             sectionSizeBytes,
             productionTabEntries

@@ -17,6 +17,10 @@ export function parseCast(buffer: Buffer) {
         bufferForSection = bufferForSection.subarray(labelOffset + label.length + 2);
     }
 
+    if (castMembers.length !== arrayLength) {
+        console.warn(`Warning: Expected ${arrayLength} cast members, but parsed ${castMembers.length}.`);
+    }
+
     return {
         data: {
             arrayLength,
