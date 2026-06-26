@@ -9,12 +9,11 @@ export function parseCast(buffer: Buffer) {
     const castMembers = [];
     while (bufferForSection.length > 0) {
         const id = bufferForSection.subarray(0, 2).readInt16BE(0);
-        const name = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
-        const labelOffset = 2 + name.length + 2;
-        const label = readUTF8String(bufferForSection.subarray(labelOffset, bufferForSection.length));
+        let {parsed: name, remainingBuffer} = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
+        let {parsed: label, remainingBuffer: _rb2} = readUTF8String(remainingBuffer);
         // console.log('Parsed cast member:', { id, name, label });
         castMembers.push({ id, name, label });
-        bufferForSection = bufferForSection.subarray(labelOffset + label.length + 2);
+        bufferForSection = _rb2;
     }
 
     if (castMembers.length !== arrayLength) {
