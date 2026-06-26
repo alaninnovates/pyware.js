@@ -1,5 +1,6 @@
 export function readUTF8String(buffer: Buffer) {
     let str = '';
+    const byteArr = [];
     if (buffer.length < 2) {
         return str;
     }
@@ -9,9 +10,11 @@ export function readUTF8String(buffer: Buffer) {
             break;
         }
         str += String.fromCharCode(byte);
+        byteArr.push(byte);
         if (byte === 0x02) {
             break;
         }
     }
+    console.log('readUTF8String', { str, byteArr });
     return str;
 }
