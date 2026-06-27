@@ -36,9 +36,8 @@ function round(value: number) {
 // middle of field x is at the 50 yard line
 // middle of field y is 42 steps behind the front sideline
 // front hash is 14 below middle
-export function positionToCoordinates(x: number, y: number): DotbookEntry {
-    x /= 625; x = round(x);
-    y /= 625; y = round(y);
+export function positionToCoordinates(x: number, y: number) {
+    x = round(x), y = round(y);
 
     const nearestYardline = 50 - Math.abs(Math.round(x / 8) * 5);
     const nearestYardlineSteps = (50 - nearestYardline) * 8/5;

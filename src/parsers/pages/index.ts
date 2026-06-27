@@ -1,6 +1,5 @@
 import { positionToCoordinates } from "./coordinate.js";
 
-
 function parsePerformerPositionList(buffer: Buffer) {
     const arrayLength = buffer.subarray(0, 2).readInt16BE(0);
     let bufferForSection = buffer.subarray(2, 2 + arrayLength * 14);
@@ -9,11 +8,18 @@ function parsePerformerPositionList(buffer: Buffer) {
     for (let i = 0; i < arrayLength; i++) {
         const positionBuffer = bufferForSection.subarray(i * 14, (i + 1) * 14);
         const id = positionBuffer.subarray(0, 2).readInt16BE(0);
-        const x = positionBuffer.subarray(2, 6).readInt32BE(0);
-        const y = positionBuffer.subarray(6, 10).readInt32BE(0);
+        const x = positionBuffer.subarray(2, 6).readInt32BE(0)/625;
+        const y = positionBuffer.subarray(6, 10).readInt32BE(0)/625;
+        const r = positionBuffer.subarray(10, 11).readInt8(0);
+        const g = positionBuffer.subarray(11, 12).readInt8(0);
+        const b = positionBuffer.subarray(12, 13).readInt8(0);
+        const char = String.fromCharCode(positionBuffer.subarray(13, 14).readInt8(0));
         positions.push({
             id,
-            ...positionToCoordinates(x, y)
+            x,
+            y,
+            color: { r, g, b },
+            char
         });
     }
 
@@ -26,8 +32,23 @@ function parsePerformerPositionList(buffer: Buffer) {
 function parseVisualList(buffer: Buffer) {
     const arrayLength = buffer.subarray(0, 2).readInt16BE(0);
 
+    const visuals = [];
+    for (let i = 0; i < arrayLength; i++) {
+        const visualBuffer = buffer.subarray(2 + i * 30, 2 + (i + 1) * 30);
+        const id = visualBuffer.subarray(0, 2).readInt16BE(0);
+        const x = visualBuffer.subarray(2, 6).readInt32BE(0)/625;
+        const y = visualBuffer.subarray(6, 10).readInt32BE(0)/625;
+
+        visuals.push({
+            id,
+            x,
+            y
+        });
+    }
+
     return {
-        arrayLength
+        arrayLength,
+        visuals
     }
 }
 
