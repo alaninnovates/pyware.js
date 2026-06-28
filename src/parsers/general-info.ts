@@ -9,10 +9,10 @@ export function parseGeneralInfo(buffer: Buffer) {
     const {parsed: authorInfo, remainingBuffer: _rb2} = readUTF8String(_rb1);
     const animationFixedTempoBPM = _rb2.subarray(0, 2).readInt16BE(0);
 
-    const field_4937Offset = 2;
-    const field_4937 = _rb2.subarray(field_4937Offset, field_4937Offset + 4);
+    const firstSetOffset = 2;
+    const firstSet = _rb2.subarray(firstSetOffset, firstSetOffset + 4);
 
-    const symbolFontOffset = field_4937Offset + 4;
+    const symbolFontOffset = firstSetOffset + 4;
     const {parsed: symbolFont} = readUTF8String(_rb2.subarray(symbolFontOffset, symbolFontOffset + sectionSizeBytes));
 
     return {
@@ -22,7 +22,7 @@ export function parseGeneralInfo(buffer: Buffer) {
             drillTitle,
             authorInfo,
             animationFixedTempoBPM,
-            field_4937,
+            firstSet,
             symbolFont
         },
         readSize: sectionSizeBytes + 8
