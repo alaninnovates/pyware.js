@@ -17,7 +17,7 @@ export function parseProductionTab(buffer: Buffer) {
     while (bufferForSection.length > 0) {
         const count = bufferForSection.subarray(0, 2).readInt16BE(0);
         const {parsed: measures, remainingBuffer: _rb1} = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
-        const tabType: TabType = _rb1.subarray(0, 1).readInt8(0);
+        const tabType = _rb1.subarray(0, 1).readInt8(0);
         const {parsed: title, remainingBuffer: _rb2} = readUTF8String(_rb1.subarray(1));
         const {parsed: note1, remainingBuffer: _rb3} = readUTF8String(_rb2);
         const {parsed: note2, remainingBuffer: _rb4} = readUTF8String(_rb3);
