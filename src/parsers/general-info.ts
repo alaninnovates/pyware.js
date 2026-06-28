@@ -10,7 +10,7 @@ export function parseGeneralInfo(buffer: Buffer) {
     const animationFixedTempoBPM = _rb2.subarray(0, 2).readInt16BE(0);
 
     const firstSetOffset = 2;
-    const firstSet = _rb2.subarray(firstSetOffset, firstSetOffset + 4);
+    const firstSet = _rb2.subarray(firstSetOffset, firstSetOffset + 4).readInt32BE(0);
 
     const symbolFontOffset = firstSetOffset + 4;
     const {parsed: symbolFont} = readUTF8String(_rb2.subarray(symbolFontOffset, symbolFontOffset + sectionSizeBytes));
