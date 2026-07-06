@@ -35,10 +35,12 @@ export function parseGridPattern(buffer: Buffer) {
     const field_4929 = buffer.subarray(8, 10).readInt16BE(0);
     const size = buffer.subarray(10, 14).readInt16BE(0);
     const bufferForSection = buffer.subarray(14, 14 + sectionSizeBytes - 6).toString('utf-8');
-    let gridData = {} as any;
+    let gridData = {
+        horizontalGridLines: [],
+        verticalGridLines: [],
+    } as any;
     for (const line of bufferForSection.split('\n')) {
         if (line.trim() === '') continue;
-        console.log(line);
         const mark = line.substring(0, 4);
         const data = line.substring(5);
         switch (mark) {
@@ -107,45 +109,58 @@ export function parseGridPattern(buffer: Buffer) {
                 gridData['hashLineColor'] = parseColor(data.split(' '));
                 break;
 
-/*
-MRK2 is abt back marker
-MARK is abt front marker
-MARK ???, distance, size, color
-MRK2 distance, flip orientation of back marker (boolean)
-*/
             case 'MARK':
+                gridData['frontMarker'] = {
+                    unknownValue: parseFloat(data.split(' ')[0]!),
+                    distance: parseFloat(data.split(' ')[1]!),
+                    size: parseFloat(data.split(' ')[2]!),
+                    color: parseColor(data.split(' ').slice(3, 6))
+                };
             case 'MRK2':
+                gridData['backMarker'] = {
+                    distance: parseFloat(data.split(' ')[0]!),
+                    flipOrientation: data.split(' ')[1] === '1'
+                };
+                break;
 
-
-/*
-HZTK is yard ticks
-HZHS is major hash, shown on major division lines
-HZHM is minor hash, shown on sub division lines
-HZMJ is division lines
-HZMN is sub-division lines
-*/
-/*
-HZMJ/VTMJ
-then distance from center
-then (1) = show marker or (0) = dont show marker
-then ` = empty or custom label
-HZHS can also have a label (` = empty again)
-HZMN and HZTK and HZHM are normal
-
-ex: HZMJ -26.25 1 `
-HZMN -8.75
-HZHS -8.75 `
-*/
             case 'HZMJ':
             case 'VTMJ':
+                gridData[mark === 'HZMJ' ? 'horizontalGridLines' : 'verticalGridLines'].push({
+                    type: 'divisionLine',
+                    distance: parseFloat(data.split(' ')[0]!),
+                    showMarker: data.split(' ')[1] === '1',
+                    label: data.split(' ')[2] === '`' ? '' : data.split(' ')[2]
+                });
+                break;
             case 'HZMN':
             case 'VTMN':
+                gridData[mark === 'HZMN' ? 'horizontalGridLines' : 'verticalGridLines'].push({
+                    type: 'subDivisionLine',
+                    distance: parseFloat(data.split(' ')[0]!),
+                });
+                break;
             case 'HZHS':
             case 'VTHS':
+                gridData[mark === 'HZHS' ? 'horizontalGridLines' : 'verticalGridLines'].push({
+                    type: 'majorHash',
+                    distance: parseFloat(data.split(' ')[0]!),
+                    label: data.split(' ')[1] === '`' ? '' : data.split(' ')[1]
+                });
+                break;
             case 'HZHM':
             case 'VTHM':
+                gridData[mark === 'HZHM' ? 'horizontalGridLines' : 'verticalGridLines'].push({
+                    type: 'minorHash',
+                    distance: parseFloat(data.split(' ')[0]!),
+                });
+                break;
             case 'HZTK':
             case 'VTTK':
+                gridData[mark === 'HZTK' ? 'horizontalGridLines' : 'verticalGridLines'].push({
+                    type: 'yardTick',
+                    distance: parseFloat(data.split(' ')[0]!),
+                });
+                break;
 
             case 'GRND':
                 gridData['groundPath'] = data;
