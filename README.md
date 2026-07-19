@@ -2,6 +2,11 @@
 
 Parse .3da (3d Mobile App) and .snc (Audio Sync) files from Pyware v11.
 
+## Installation
+```bash
+npm install pyware.js
+```
+
 ## Usage
 Parsing a .3da file:
 ```js

@@ -10,9 +10,9 @@
     "watch": "tsc -w"
   },
   "keywords": [],
-  "author": "",
+  "author": "alaninnovates",
   "license": "GPL-3.0-only",
-  "description": "",
+  "description": "Parse files from Pyware v11.",
   "devDependencies": {
     "@types/node": "^25.8.0",
     "typescript": "^6.0.3"
