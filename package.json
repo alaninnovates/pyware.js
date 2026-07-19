@@ -1,5 +1,6 @@
 {
-  "name": "pyware-parser",
+  "name": "pyware.js",
+  "private": false,
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +11,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "description": "",
   "devDependencies": {
     "@types/node": "^25.8.0",
