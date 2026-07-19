@@ -44,3 +44,20 @@ export function parseProductionTab(buffer: Buffer) {
         readSize: sectionSizeBytes + 8
     };
 }
+
+export interface ProductionTab {
+    productionTabHeader: string;
+    sectionSizeBytes: number;
+    arrayLength: number;
+    productionTabEntries: {
+        count: number;
+        measures: string;
+        tabType: TabType;
+        title: string;
+        note1: string;
+        note2: string;
+        note3: string;
+        note4: string;
+        note5: string;
+    }[];
+}

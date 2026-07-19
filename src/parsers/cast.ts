@@ -30,3 +30,10 @@ export function parseCast(buffer: Buffer) {
         readSize: sectionSizeBytes + 8
     };
 }
+
+export interface Cast {
+    castSectionHeader: string;
+    sectionSizeBytes: number;
+    arrayLength: number;
+    castMembers: { id: number; name: string; label: string }[];
+}

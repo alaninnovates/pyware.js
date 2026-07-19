@@ -1,5 +1,13 @@
-import { readFileSync, writeFileSync } from 'node:fs';
+// import { readFileSync, writeFileSync } from 'node:fs';
+import type { Cast } from './parsers/cast.js';
+import type { GeneralInfo } from './parsers/general-info.js';
+import type { GridPattern } from './parsers/grid-pattern.js';
+import type { HeaderInfo } from './parsers/header.js';
+import type { Pages } from './parsers/pages/index.js';
+import type { ProductionTab } from './parsers/production-tab.js';
 import { parseHeader, parseGeneralInfo, parseGridPattern, parseCast, parseProductionTab, parsePages } from './parsers/index.js';
+
+export type Pyware3DAFile = ReturnType<typeof parsePyware3DAFile>;
 
 export function parsePyware3DAFile(buffer: Buffer) {
     const headerInfo = parseHeader(buffer);
@@ -42,20 +50,20 @@ export function parsePywareSNCFile(buffer: Buffer) {
     };
 }
 
-function cli() {
-    const filePath = process.argv[2];
-    if (!filePath) {
-        console.error('Please provide a file path as an argument.');
-        process.exit(1);
-    }
+// function cli() {
+//     const filePath = process.argv[2];
+//     if (!filePath) {
+//         console.error('Please provide a file path as an argument.');
+//         process.exit(1);
+//     }
 
-    try {
-        const fileBuffer = readFileSync(filePath);
-        const outputData = parsePywareSNCFile(fileBuffer);
-        writeFileSync('out.json', JSON.stringify(outputData, null, 2));
-    } catch (error) {
-        console.error('Error reading file:', error);
-    }
-}
+//     try {
+//         const fileBuffer = readFileSync(filePath);
+//         const outputData = parsePyware3DAFile(fileBuffer);
+//         writeFileSync('out.json', JSON.stringify(outputData, null, 2));
+//     } catch (error) {
+//         console.error('Error reading file:', error);
+//     }
+// }
 
 // cli();

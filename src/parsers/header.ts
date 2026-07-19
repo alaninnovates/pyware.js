@@ -12,3 +12,9 @@ export function parseHeader(buffer: Buffer) {
         readSize: 10
     };
 }
+
+export interface HeaderInfo {
+    fileHeader: string;
+    field_4941: Buffer;
+    field_4942: Buffer;
+}

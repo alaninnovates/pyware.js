@@ -200,3 +200,11 @@ export function parseGridPattern(buffer: Buffer) {
         readSize: sectionSizeBytes + 8
     };
 }
+
+export interface GridPattern {
+    gridPatternHeader: string;
+    sectionSizeBytes: number;
+    field_4929: number;
+    size: number;
+    gridData: any;
+}

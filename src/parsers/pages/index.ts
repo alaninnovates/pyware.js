@@ -10,9 +10,9 @@ function parsePerformerPositionList(buffer: Buffer) {
         const id = positionBuffer.subarray(0, 2).readInt16BE(0);
         const x = positionBuffer.subarray(2, 6).readInt32BE(0)/625;
         const y = positionBuffer.subarray(6, 10).readInt32BE(0)/625;
-        const r = positionBuffer.subarray(10, 11).at(0);
-        const g = positionBuffer.subarray(11, 12).at(0);
-        const b = positionBuffer.subarray(12, 13).at(0);
+        const r = positionBuffer.subarray(10, 11).at(0)!;
+        const g = positionBuffer.subarray(11, 12).at(0)!;
+        const b = positionBuffer.subarray(12, 13).at(0)!;
         const char = String.fromCharCode(positionBuffer.subarray(13, 14).readInt8(0));
         positions.push({
             id,
@@ -101,4 +101,35 @@ export function parsePages(buffer: Buffer) {
         },
         readSize: sectionSizeBytes + 8
     };
+}
+
+export interface Pages {
+    pagesHeader: string;
+    sectionSizeBytes: number;
+    arrayLength: number;
+    pages: {
+        performerPositionList: {
+            arrayLength: number;
+            positions: {
+                id: number;
+                x: number;
+                y: number;
+                color: { r: number; g: number; b: number };
+                char: string;
+            }[];
+        };
+        visualList: {
+            arrayLength: number;
+            visuals: {
+                id: number;
+                shape: number;
+                carryPerformerId: number;
+                topLeft: { x: number; y: number };
+                bottomRight: { x: number; y: number };
+                heightAboveFloor: number;
+                rotation: number;
+                imageUrl: string;
+            }[];
+        };
+    }[];
 }

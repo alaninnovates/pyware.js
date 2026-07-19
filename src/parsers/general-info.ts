@@ -28,3 +28,13 @@ export function parseGeneralInfo(buffer: Buffer) {
         readSize: sectionSizeBytes + 8
     };
 }
+
+export interface GeneralInfo {
+    generalInfoHeader: string;
+    sectionSizeBytes: number;
+    drillTitle: string;
+    authorInfo: string;
+    animationFixedTempoBPM: number;
+    firstSet: number;
+    symbolFont: string;
+}
