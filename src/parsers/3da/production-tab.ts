@@ -1,4 +1,4 @@
-import { readUTF8String } from "../util/util.js";
+import { readUTF8String } from "../../util/util.js";
 
 enum TabType {
     StandardPageTab,
@@ -16,14 +16,14 @@ export function parseProductionTab(buffer: Buffer) {
 
     while (bufferForSection.length > 0) {
         const count = bufferForSection.subarray(0, 2).readInt16BE(0);
-        const {parsed: measures, remainingBuffer: _rb1} = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
+        const { parsed: measures, remainingBuffer: _rb1 } = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
         const tabType = _rb1.subarray(0, 1).readInt8(0);
-        const {parsed: title, remainingBuffer: _rb2} = readUTF8String(_rb1.subarray(1));
-        const {parsed: note1, remainingBuffer: _rb3} = readUTF8String(_rb2);
-        const {parsed: note2, remainingBuffer: _rb4} = readUTF8String(_rb3);
-        const {parsed: note3, remainingBuffer: _rb5} = readUTF8String(_rb4);
-        const {parsed: note4, remainingBuffer: _rb6} = readUTF8String(_rb5);
-        const {parsed: note5, remainingBuffer: _rb7} = readUTF8String(_rb6);
+        const { parsed: title, remainingBuffer: _rb2 } = readUTF8String(_rb1.subarray(1));
+        const { parsed: note1, remainingBuffer: _rb3 } = readUTF8String(_rb2);
+        const { parsed: note2, remainingBuffer: _rb4 } = readUTF8String(_rb3);
+        const { parsed: note3, remainingBuffer: _rb5 } = readUTF8String(_rb4);
+        const { parsed: note4, remainingBuffer: _rb6 } = readUTF8String(_rb5);
+        const { parsed: note5, remainingBuffer: _rb7 } = readUTF8String(_rb6);
 
         productionTabEntries.push({ count, measures, tabType, title, note1, note2, note3, note4, note5 });
 

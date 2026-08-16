@@ -1,4 +1,4 @@
-import { readUTF8String } from "../../util/util.js";
+import { readUTF8String } from "../../../util/util.js";
 
 function parsePerformerPositionList(buffer: Buffer) {
     const arrayLength = buffer.subarray(0, 2).readInt16BE(0);
@@ -8,8 +8,8 @@ function parsePerformerPositionList(buffer: Buffer) {
     for (let i = 0; i < arrayLength; i++) {
         const positionBuffer = bufferForSection.subarray(i * 14, (i + 1) * 14);
         const id = positionBuffer.subarray(0, 2).readInt16BE(0);
-        const x = positionBuffer.subarray(2, 6).readInt32BE(0)/625;
-        const y = positionBuffer.subarray(6, 10).readInt32BE(0)/625;
+        const x = positionBuffer.subarray(2, 6).readInt32BE(0) / 625;
+        const y = positionBuffer.subarray(6, 10).readInt32BE(0) / 625;
         const r = positionBuffer.subarray(10, 11).at(0)!;
         const g = positionBuffer.subarray(11, 12).at(0)!;
         const b = positionBuffer.subarray(12, 13).at(0)!;
@@ -37,13 +37,13 @@ function parseVisualList(buffer: Buffer) {
         const id = visualBuffer.subarray(0, 2).readInt16BE(0);
         const shape = visualBuffer.subarray(2, 4).readInt16BE(0);
         const carryPerformerId = visualBuffer.subarray(4, 6).readInt16BE(0);
-        const x1 = visualBuffer.subarray(6, 10).readInt32BE(0)/625;
-        const y1 = visualBuffer.subarray(10, 14).readInt32BE(0)/625;
-        const x2 = visualBuffer.subarray(14, 18).readInt32BE(0)/625;
-        const y2 = visualBuffer.subarray(18, 22).readInt32BE(0)/625;
-        const heightAboveFloor = visualBuffer.subarray(22, 26).readInt32BE(0)/1000;
-        const rotation = visualBuffer.subarray(26, 30).readInt32BE(0)/1000 * (180/Math.PI);
-        const {parsed: imageUrl} = readUTF8String(visualBuffer.subarray(30, 32));
+        const x1 = visualBuffer.subarray(6, 10).readInt32BE(0) / 625;
+        const y1 = visualBuffer.subarray(10, 14).readInt32BE(0) / 625;
+        const x2 = visualBuffer.subarray(14, 18).readInt32BE(0) / 625;
+        const y2 = visualBuffer.subarray(18, 22).readInt32BE(0) / 625;
+        const heightAboveFloor = visualBuffer.subarray(22, 26).readInt32BE(0) / 1000;
+        const rotation = visualBuffer.subarray(26, 30).readInt32BE(0) / 1000 * (180 / Math.PI);
+        const { parsed: imageUrl } = readUTF8String(visualBuffer.subarray(30, 32));
 
         visuals.push({
             id,

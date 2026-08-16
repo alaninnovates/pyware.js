@@ -1,4 +1,4 @@
-import { readUTF8String } from "../util/util.js";
+import { readUTF8String } from "../../util/util.js";
 
 export function parseCast(buffer: Buffer) {
     const castSectionHeader = buffer.subarray(0, 4).toString('utf-8');
@@ -9,8 +9,8 @@ export function parseCast(buffer: Buffer) {
     const castMembers = [];
     while (bufferForSection.length > 0) {
         const id = bufferForSection.subarray(0, 2).readInt16BE(0);
-        let {parsed: name, remainingBuffer} = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
-        let {parsed: label, remainingBuffer: _rb2} = readUTF8String(remainingBuffer);
+        let { parsed: name, remainingBuffer } = readUTF8String(bufferForSection.subarray(2, bufferForSection.length));
+        let { parsed: label, remainingBuffer: _rb2 } = readUTF8String(remainingBuffer);
         // console.log('Parsed cast member:', { id, name, label });
         castMembers.push({ id, name, label });
         bufferForSection = _rb2;
