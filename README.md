@@ -40,5 +40,8 @@ console.log(parsed);
 */
 ```
 
+## Web Demo
+To view a demonstration of the parser in action, visit [the web demo](https://pyware-parser.vercel.app). You may also find a sample .3da file attached [here](https://github.com/alaninnovates/pyware.js/raw/refs/heads/main/web/public/HexedMov3.3da).
+
 ## License
 GNU GPLv3
